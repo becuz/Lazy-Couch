@@ -29,9 +29,9 @@ int port = 9898;
 String apiVideoToggle = "/api/activeapps/smplayer/control/play";
 
 //variables
-unsigned long lastConnectionTime = 0;          // last time you connected to the server, in milliseconds
-boolean lastConnected = false;                 // state of the connection last time through the main loop
-int lastForceValue = -1;
+unsigned long lastConnectionTime = 0;
+boolean lastConnected = false;
+int lastSit = -1;  //indicate if someone is sitting over the force resistor last time through the main loop
 
 void setup()
 {
@@ -65,10 +65,10 @@ void loop()
     Serial.print("forceValue ");
     Serial.println(forceValue);
   }
-  forceValue = forceValue > forceLimit;
+  int sit = forceValue > forceLimit;
   if (digitalValue == 1 || (lastForceValue > -1 && forceValue != lastForceValue)){
     digitalWrite(ledPin, HIGH);
-    Serial.println("digitalValue");
+    Serial.println("input triggered");
     if (!client.connected()){
       remoskoTogglePlay();
     }
@@ -76,7 +76,7 @@ void loop()
   }
 
   lastConnected = client.connected();
-  lastForceValue = forceValue;
+  lastSit = sit;
 }
 
 //makes a HTTP connection to toggle play/pause in the restmote video player 
