@@ -29,7 +29,7 @@ int port = 9898;
 String apiVideoToggle = "/api/activeapps/smplayer/control/play";
 
 //variables
-unsigned long lastConnectionTime = 0;
+//unsigned long lastConnectionTime = 0;
 boolean lastConnected = false;
 int lastSit = -1;  //indicate if someone is sitting over the force resistor last time through the main loop
 
@@ -87,7 +87,7 @@ void remoskoTogglePlay() {
     client.println("POST " + apiVideoToggle + " HTTP/1.0");
     client.println("Connection: close");
     client.println();
-    lastConnectionTime = millis();
+    //lastConnectionTime = millis();
   }  else {
     Serial.println("connection failed");
     Serial.println("disconnecting.");
