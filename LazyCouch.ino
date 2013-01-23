@@ -1,11 +1,13 @@
 /*
-Lazy Couch 
-an Arduino Client for RES(T)mote Control (restmote.com)
+ Lazy Couch, 
+ an Arduino Client for RES(T)mote Control (http://www.restmote.com)
+ Works on Arduino Ethernet or Ethernet Shield.
 
-The purpose of this simple client is to play/pause your pc video player when you sit in or stand up from your couch.
-This client has a button, a force resistor and a led. 
-When the button is pushed, or the force resistor reads a big delta value, a POST /api/activeapps/smplayer/control/play is made to the server and the led is briefly lighted.
+ The purpose of this simple client is to play/pause your pc video player when you sit in or stand up from your couch.
+ This client has a button, a force resistor and a led. 
+ When the button is pushed, or the force resistor reads a big delta value, a POST /api/activeapps/smplayer/control/play is made to the server and the led is briefly lighted.
 
+ See http://www.restmote.com/ for details.
 */
 #include <SPI.h>
 #include <Ethernet.h>
@@ -66,7 +68,7 @@ void loop()
     Serial.println(forceValue);
   }
   int sit = forceValue > forceLimit;
-  if (digitalValue == 1 || (lastForceValue > -1 && forceValue != lastForceValue)){
+  if (digitalValue == 1 || (lastSit > -1 && sit != lastSit)){
     digitalWrite(ledPin, HIGH);
     Serial.println("input triggered");
     if (!client.connected()){
